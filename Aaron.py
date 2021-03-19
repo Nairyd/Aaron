@@ -77,13 +77,16 @@ def choseRightBrick():              # letztlich muss ich irgendwo noch ne Funkti
 
 def buildEverything():
     buildTheIntro()
-    #buildNextPart ....
+    #buildAnsprache()
+    #buildOuttro()
+    #buildAmGrab()
+
     document.save(lname+'.docx')
     print("Build Everything")
 
 
 def buildTheIntro():
-    input("Building the intro now ...")
+    print("Building the intro now ...")
     global path
 
 
@@ -102,9 +105,17 @@ def buildTheIntro():
     document.add_heading("Begrüßung", 1)
     brickMove("\\Bricks\\Begrüßung\\Begrüßung1.docx")
 
+    #Mögliches Lied
+    document.add_heading("Lied:", 1)
+
+    #Eingangsgebet
+    document.add_heading("Eingangsgebet", 1)
+
+    #Psalm
+    document.add_heading("Psalm", 1)
 
 
-    input("Intro finished")
+    print("Intro finished")
 
 
 
