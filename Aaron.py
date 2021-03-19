@@ -2,16 +2,26 @@ print ("Aaron\n\nExodus 2,16 'Aaron wird für dich zum Volk sprechen. Es ist so,
 
 import os
 import datetime
-import openpyxl
+import openpyxl                 # to work with excel
 from openpyxl import load_workbook
 
+
+from docx import Document       # to work with Document
+#from docx.text.parargaph import Paragraph      klappt irgendwie nicht ...
+
+
+
+path = "."
+
+# Vars to check ...
 lname = "MUSTERMANN"
 sname = "MAX"
 sort = "STERBEORT"
 sdate = "STERBEDATUM"
 
 def getTheVars():       #export variables from Excel?
-    wb = load_workbook("C:/Users/Dyrian/Desktop/Aaron/Infoinput.xlsx")          # am besten baue ich hier direkt ein, dass er auf die excel tabelle im gleichen Ordner schaut ....
+    global path
+    wb = load_workbook(path+"\\Infoinput.xlsx")          # am besten baue ich hier direkt ein, dass er auf die excel tabelle im gleichen Ordner schaut ....
     #name= #!/usr/bin/python
     ws = wb.active
     global lname
@@ -27,8 +37,22 @@ def getTheVars():       #export variables from Excel?
     print("Sterbedatum:     ",sdate)
 
 
+def buildEverything():
+    global path
+    document = Document()
+    document.add_heading('This is the title', 0)
+    p = document.add_paragraph('And this is text222222222222222222222 ')
+    p.add_run('some bold text').bold = True
+    p.add_run('and italic text.').italic = True
+    document.save(lname+'.docx')
+
+
+    buildTheIntro()
+    #buildNextPart ....
+
+
+
 def buildTheIntro():
-    print(sort)
     input("Building the intro now ...")
 
 
@@ -38,7 +62,7 @@ def buildTheIntro():
 try:
     getTheVars()
 
-    buildTheIntro()
+    buildEverything()
 
 
 
