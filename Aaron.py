@@ -128,3 +128,16 @@ try:
 
 finally:
     input("hats geklappt?")
+
+
+
+
+# ------ ToDo:  --------------------------------------------------------------------------------------------
+#   o  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
+#   o  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
+#   o  Formatierung überarbeiten ...  
+#
+#   o  Weitere Texte erstellen ... (nicht so wichtig)
+#
+#
+#
