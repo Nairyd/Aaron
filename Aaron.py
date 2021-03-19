@@ -21,9 +21,12 @@ lname = "NACHNAME"
 sname = "VORNAME"
 sort = "STERBEORT"
 sdate = "STERBEDATUM"
+# Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
+lplaceh = [lname,sname,sort,sdate]
 
 
 def getTheVars():       #export variables from Excel?
+    print("This are all the Infos we got:")
     global path
     wb = load_workbook(path+"\\Infoinput.xlsx")          # am besten baue ich hier direkt ein, dass er auf die excel tabelle im gleichen Ordner schaut ....
     #name= #!/usr/bin/python
@@ -39,7 +42,8 @@ def getTheVars():       #export variables from Excel?
     global sdate
     sdate = datetime.datetime.strftime((ws['C5'].value), '%d/%b/%Y')        #convert date into string ... looks better -.-
     print("Sterbedatum:     ",sdate)
-
+    global lvars        # creating a list of all the vars
+    lvars = [lname,sname,sort,sdate]
 
 def paraMove(output_doc_name, paragraph):
     output_para = output_doc_name.add_paragraph()
@@ -52,6 +56,7 @@ def paraMove(output_doc_name, paragraph):
         output_run.style.name = run.style.name                          # Run's font data
         output_para.paragraph_format.alignment = paragraph.paragraph_format.alignment
 
+
 def brickMove(doc):
     print("Brick Moved")
     global document
@@ -60,19 +65,19 @@ def brickMove(doc):
         paraMove(document, para)
 
 
-
-
-
-
-
-
-
-
-
+def fillVars():
+    print("Filling the Vars")
+    lpos=-1
+    for var in lplaceh:
+        lpos += 1                   #check list position
+        for paragraph in document.paragraphs:
+            if var in paragraph.text:
+                paragraph.text = paragraph.text.replace(str(var),lvars[lpos])
 
 
 def choseRightBrick():              # letztlich muss ich irgendwo noch ne Funktion einbauen, die Selektieren kann
     print("Chosing right Brick ....")
+
 
 
 def buildEverything():
@@ -80,15 +85,14 @@ def buildEverything():
     #buildAnsprache()
     #buildOuttro()
     #buildAmGrab()
-
+    fillVars()
     document.save(lname+'.docx')
     print("Build Everything")
 
 
 def buildTheIntro():
-    print("Building the intro now ...")
+    print("\nBuilding the intro now ...")
     global path
-
 
     #Headline
     header = document.sections[0].header
@@ -120,6 +124,7 @@ def buildTheIntro():
 
 
 try:
+
     getTheVars()
 
     buildEverything()
@@ -127,7 +132,7 @@ try:
 
 
 finally:
-    input("hats geklappt?")
+    input("\nhats geklappt?")
 
 
 
@@ -135,7 +140,7 @@ finally:
 # ------ ToDo:  --------------------------------------------------------------------------------------------
 #   o  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
 #   o  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
-#   o  Formatierung überarbeiten ...  
+#   o  Formatierung überarbeiten ...
 #
 #   o  Weitere Texte erstellen ... (nicht so wichtig)
 #
