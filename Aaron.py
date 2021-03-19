@@ -1,14 +1,14 @@
 print ("Aaron\n\nExodus 2,16 'Aaron wird für dich zum Volk sprechen. Es ist so, als ob du durch ihn sprichst. Und er wird deine Botschaften weitergeben, so wie ein Prophet meine.'\n\n")
 
-#Die Idee: Anhand der Daten aus Infoinput.xlsx wird ein Dokument zusammengestellt.
+# Die Idee: Anhand der Daten aus Infoinput.xlsx wird ein Dokument zusammengestellt.
 # Als Grundlage für das Dokument stehen mehrere docx Dokumente zur Verfügung (Bricks)
 #
 #
 
 
-
 import os
 import datetime
+
 import openpyxl                 # to work with excel
 from openpyxl import load_workbook
 from docx import Document       # to work with Document
@@ -20,9 +20,11 @@ document = Document()
 lname = "NACHNAME"
 sname = "VORNAME"
 sort = "STERBEORT"
+gdate = "GEBURTSDATUM"
 sdate = "STERBEDATUM"
+lalter = "LEBENSALTER"
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
-lplaceh = [lname,sname,sort,sdate]
+lplaceh = [lname,sname,sort,gdate,sdate,lalter]
 
 
 def getTheVars():       #export variables from Excel?
@@ -32,18 +34,25 @@ def getTheVars():       #export variables from Excel?
     #name= #!/usr/bin/python
     ws = wb.active
     global lname
-    lname = (ws['C2'].value)
+    lname = (ws["C2"].value)
     global sname
-    sname = (ws['D2'].value)
+    sname = (ws["D2"].value)
     print("Name:            ",sname," ",lname)
     global sort
-    sort = (ws['C7'].value)
+    sort = (ws["C7"].value)
     print("Sterbeort:       ",sort)
+    global gdate
+    gdate = datetime.datetime.strftime((ws["C4"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
+    print("Geburtsdatum:    ",gdate)
     global sdate
-    sdate = datetime.datetime.strftime((ws['C5'].value), '%d/%b/%Y')        #convert date into string ... looks better -.-
+    sdate = datetime.datetime.strftime((ws["C5"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
     print("Sterbedatum:     ",sdate)
+    global lalter
+    lalter = str(ws["C5"].value.year - ws["C4"].value.year - ((ws["C5"].value.month, ws["C5"].value.day) < (ws["C4"].value.month, ws["C4"].value.day)))
+    print("Lebensalter:     ",lalter)
+
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,sdate]
+    lvars = [lname,sname,sort,gdate,sdate,lalter]            #put new vars here ... also put them in the lplaceh list ....
 
 def paraMove(output_doc_name, paragraph):
     output_para = output_doc_name.add_paragraph()
@@ -138,7 +147,7 @@ finally:
 
 
 # ------ ToDo:  --------------------------------------------------------------------------------------------
-#   o  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
+#   x  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
 #   o  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
 #   o  Formatierung überarbeiten ...
 #
