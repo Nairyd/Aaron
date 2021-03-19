@@ -19,10 +19,12 @@ from docx import Document       # to work with Document
 
 
 path = "."
+document = Document()
+
 
 # Vars to check ...
-lname = "MUSTERMANN"
-sname = "MAX"
+lname = "NACHNAME"
+sname = "VORNAME"
 sort = "STERBEORT"
 sdate = "STERBEDATUM"
 
@@ -43,19 +45,32 @@ def getTheVars():       #export variables from Excel?
     sdate = datetime.datetime.strftime((ws['C5'].value), '%d/%b/%Y')        #convert date into string ... looks better -.-
     print("Sterbedatum:     ",sdate)
 
+def brickMove(doc):
+    global document
+    paragraphs = []
+    brick = Document(path+doc)
+    for para in brick.paragraphs:
+        p = para.text
+        paragraphs.append(p)
+    for item in paragraphs:
+        document.add_paragraph(item)
+
+
+def choseRightBrick():              # letztlich muss ich irgendwo noch ne Funktion einbauen, die Selektieren kann
+    print("Chosing right Brick ....")
+
 
 def buildEverything():
     buildTheIntro()
     #buildNextPart ....
-
-
-
+    document.save(lname+'.docx')
+    print("Build Everything")
 
 
 def buildTheIntro():
     input("Building the intro now ...")
     global path
-    document = Document()
+
 
     #Headline
     header = document.sections[0].header
@@ -66,34 +81,15 @@ def buildTheIntro():
 
     #Votum
     document.add_heading("Votum", 1)
-    p = document.add_paragraph("Im Namen des Vaters ....")
-    input("zwischentest..")
-    brick = Document(path+"\\Bricks\\Votum\\Votum.docx")
+    brickMove("\\Bricks\\Votum\\Votum.docx")            # ich muss die datei weglassen denk ich und die Datei mit den Random sachen auswählen????
 
-    paragraphs = []
-
-    for para in brick.paragraphs:
-        p = para.text
-        paragraphs.append(p)
-#    output = Document()
-    for item in paragraphs:
-        document.add_paragraph(item)
-#    document.save('OutputDoc.docx')
+    #Begrüßung
+    document.add_heading("Begrüßung", 1)
+    brickMove("\\Bricks\\Begrüßung\\Begrüßung1.docx")
 
 
 
-    p = document.add_paragraph("And this is text222222222222222222222 ")
 
-    p.add_run("some bold text").bold = True
-    p.add_run("and italic text.").italic = True
-    p.add_run("weitererText").bold = True
-
-
-    document.add_heading('This is the title2', 0)
-    p = document.add_paragraph('This is the second paragraph')
-    p.add_run('some bold text').bold = True
-    
-    document.save(lname+'.docx')
     input("Intro finished")
 
 
