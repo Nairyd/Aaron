@@ -11,7 +11,7 @@ sort = "STERBEORT"
 sdate = "STERBEDATUM"
 
 def getTheVars():       #export variables from Excel?
-    wb = load_workbook("C:/Users/Dyrian/Desktop/Aaron/Infoinput.xlsx")
+    wb = load_workbook("C:/Users/Dyrian/Desktop/Aaron/Infoinput.xlsx")          # am besten baue ich hier direkt ein, dass er auf die excel tabelle im gleichen Ordner schaut ....
     #name= #!/usr/bin/python
     ws = wb.active
     global lname
