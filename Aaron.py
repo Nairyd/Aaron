@@ -11,22 +11,17 @@ import os
 import datetime
 import openpyxl                 # to work with excel
 from openpyxl import load_workbook
-
-
 from docx import Document       # to work with Document
-#from docx.text.parargaph import Paragraph      klappt irgendwie nicht ...
-
-
 
 path = "."
 document = Document()
-
 
 # Vars to check ...
 lname = "NACHNAME"
 sname = "VORNAME"
 sort = "STERBEORT"
 sdate = "STERBEDATUM"
+
 
 def getTheVars():       #export variables from Excel?
     global path
@@ -45,15 +40,35 @@ def getTheVars():       #export variables from Excel?
     sdate = datetime.datetime.strftime((ws['C5'].value), '%d/%b/%Y')        #convert date into string ... looks better -.-
     print("Sterbedatum:     ",sdate)
 
+
+def paraMove(output_doc_name, paragraph):
+    output_para = output_doc_name.add_paragraph()
+    for run in paragraph.runs:
+        output_run = output_para.add_run(run.text)
+        output_run.bold = run.bold                                      # Run's bold data
+        output_run.italic = run.italic                                  # Run's italic data
+        output_run.underline = run.underline                            # Run's underline data
+        output_run.font.color.rgb = run.font.color.rgb                  # Run's color data
+        output_run.style.name = run.style.name                          # Run's font data
+        output_para.paragraph_format.alignment = paragraph.paragraph_format.alignment
+
 def brickMove(doc):
+    print("Brick Moved")
     global document
-    paragraphs = []
-    brick = Document(path+doc)
-    for para in brick.paragraphs:
-        p = para.text
-        paragraphs.append(p)
-    for item in paragraphs:
-        document.add_paragraph(item)
+    input_doc = Document(path+doc)
+    for para in input_doc.paragraphs:
+        paraMove(document, para)
+
+
+
+
+
+
+
+
+
+
+
 
 
 def choseRightBrick():              # letztlich muss ich irgendwo noch ne Funktion einbauen, die Selektieren kann
@@ -86,7 +101,6 @@ def buildTheIntro():
     #Begrüßung
     document.add_heading("Begrüßung", 1)
     brickMove("\\Bricks\\Begrüßung\\Begrüßung1.docx")
-
 
 
 
