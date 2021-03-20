@@ -28,8 +28,9 @@ sdate = "STERBEDATUM"
 lalter = "LEBENSALTER"
 bvers = "BIBELVERS"
 tmotiv = "TRAUERMOTIV"
+lzahl = "LIEDERANZAHL"
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
-lplaceh = [lname,sname,sort,gdate,sdate,lalter,bvers,tmotiv]
+lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl]
 
 
 def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
@@ -61,9 +62,23 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global bvers
     bvers = choseRightBrick("\\Bibelvers\\",tmotiv)
     print("Bibelvers:\n",bvers,"\n")
+    global lzahl
+    lzahl = (ws["C27"].value)
+    print("Liederanzahl:    ",lzahl)
+
+
+
 
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,gdate,sdate,lalter,bvers,tmotiv]            #put new vars here ... also put them in the lplaceh list ....
+    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl]            #put new vars here ... also put them in the lplaceh list ....
+
+    # Die Liednamen ... glaube die müssen nicht in die listen lvars und lplaceh ....
+    global lname1, lname2, lname3, lname4
+    lname1 = (ws["C28"].value)
+    lname2 = (ws["C29"].value)
+    lname3 = (ws["C30"].value)
+    lname4 = (ws["C31"].value)
+
 
 def paraMove(output_doc_name, paragraph):           # to keep the style
     output_para = output_doc_name.add_paragraph()
@@ -103,7 +118,7 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
             lpos = 4                            #startwer ab dem es in der Excell tabelle einträge gibt
             excel = load_workbook(item)         #Workbook
             sheet = excel.active                #Aktive Tabellenliste/Seite
-            for cell in sheet["B5":"B7"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
+            for cell in sheet["B5":"B9"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
                 lpos +=1                        #trakt die position in der Liste ... in diesem Fall die Zeile
                 if str(cell[0].value) == parameter:
                     bricklist.append(sheet["C"+str(lpos)].value)
@@ -127,16 +142,16 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
 
 
 def buildEverything():
-    buildTheIntro()
-    #buildAnsprache()
-    #buildOuttro()
+    buildIntro()
+    buildAnsprache()
+    buildOutro()
     #buildAmGrab()
     fillVars()
     document.save(lname+'.docx')
     print("Build Everything")
 
 
-def buildTheIntro():
+def buildIntro():
     print("\nBuilding the intro now ...")
     global path
 
@@ -156,15 +171,39 @@ def buildTheIntro():
     brickMove(choseRightBrick("\\Begrüßung\\",0))
 
     #Mögliches Lied
-    document.add_heading("Lied:", 1)
+    if lzahl >= 3:
+        document.add_heading("Lied: "+lname1, 1)
 
     #Psalm
     document.add_heading("Psalm", 1)
     brickMove(choseRightBrick("\\Psalm\\",tmotiv))
+
     #Eingangsgebet
     document.add_heading("Eingangsgebet", 1)
+    brickMove(choseRightBrick("\\Eingangsgebet\\",tmotiv))
 
+    #Schriftlesung
+    document.add_heading("Schriftlesung", 1)
+    brickMove(choseRightBrick("\\Schriftlesung\\",tmotiv))
+
+    #Mögliches Lied
+    if lzahl >= 3:
+        document.add_heading("Lied: "+lname2, 1)
+    else:
+        document.add_heading("Lied: "+lname1, 1)
     print("Intro finished")
+
+def buildAnsprache():
+    print("\nBuilding the Ansprache now ...")
+    global path
+
+
+
+def buildOutro():
+    print("\nBuilding the Outro now ...")
+    global path
+
+
 
 
 
@@ -186,9 +225,17 @@ finally:
 #   x  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
 #   x  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
 #   o  Formatierung überarbeiten ...
+#   o  Alle Texte mit den Motiven verknüpfen, für den maximalen roten Faden ... (es muss aber die möglichkeit geben auch allgemeine Texte zu mischen ... nicht jede Begrüßung braucht gleich nen Thema)
+#      Wie wäre die Idee, letztlich alles was auswirkung auf den roten Faden hat mit nem entsprechenden Header zu verpacken und ggf landet dann die begrüßung mehrfach in der bricklist, da es sowohl zum motiv weg passt, als auch zum motiv der Familie ...dann wäre die wahrscheinlichkeit erhögt ... kp ob das schlau ist.
+#   o  Bei Gebeten / Psalm könnte man auch noch sowas eingeben wie Klage oder Vertrauen ...
 #
+#
+#   o  am Ende checken, ob mehr als  2000 Wörter sind ... wenn ja, dann Schriftlesung rauskicken? Oder umgekehrt, schriftlesung nur einfügen, wenn usw....
+#   o  Lieder npassen ....
+#   o  später noch Varianten für plötzlichen Tod / lange Krankheit / Suizid / Tod eines Kindes ... einbauen
 #   o  in männliche und weibliche Anrede unterscheiden
 #   o  Weitere Texte erstellen ... (nicht so wichtig)
 #
 #
 #
+#   o  Mega theoretisch könnte man die ganzen Variablen in Form dieser Mewis Exporte egstalten .... "ANREDE" usw...
