@@ -65,7 +65,7 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global lvars        # creating a list of all the vars
     lvars = [lname,sname,sort,gdate,sdate,lalter,bvers,tmotiv]            #put new vars here ... also put them in the lplaceh list ....
 
-def paraMove(output_doc_name, paragraph):
+def paraMove(output_doc_name, paragraph):           # to keep the style
     output_para = output_doc_name.add_paragraph()
     for run in paragraph.runs:
         output_run = output_para.add_run(run.text)
@@ -110,6 +110,17 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
         if item.suffix == ".docx":
             if parameter == 0:
                 bricklist.append("\\"+str(item))
+            else:
+                brickdoc = Document(item)
+                header = brickdoc.sections[0].header
+                if parameter in header.paragraphs[0].text:
+                    bricklist.append("\\"+str(item))
+                #    motiv = item.section[0]
+                #    header = document.sections[0].header
+                #    header.paragraphs[0].text = "Trauerfeier "+sname+" "+lname
+
+
+
     brick = random.choice(bricklist)
     return brick
 
@@ -149,7 +160,7 @@ def buildTheIntro():
 
     #Psalm
     document.add_heading("Psalm", 1)
-    brickMove(choseRightBrick("\\Psalm\\",0))
+    brickMove(choseRightBrick("\\Psalm\\",tmotiv))
     #Eingangsgebet
     document.add_heading("Eingangsgebet", 1)
 
@@ -166,16 +177,17 @@ try:
 
 
 finally:
-    input("\nhats geklappt?")
+    input("\nEpic ....")
 
 
 
 
 # ------ ToDo:  --------------------------------------------------------------------------------------------
 #   x  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
-#   o  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
+#   x  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
 #   o  Formatierung überarbeiten ...
 #
+#   o  in männliche und weibliche Anrede unterscheiden
 #   o  Weitere Texte erstellen ... (nicht so wichtig)
 #
 #
