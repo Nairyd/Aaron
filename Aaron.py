@@ -8,10 +8,13 @@ print ("Aaron\n\nExodus 2,16 'Aaron wird für dich zum Volk sprechen. Es ist so,
 
 import os
 import datetime
+import random
 
 import openpyxl                 # to work with excel
 from openpyxl import load_workbook
 from docx import Document       # to work with Document
+from pathlib import Path
+
 
 path = "."
 document = Document()
@@ -23,11 +26,13 @@ sort = "STERBEORT"
 gdate = "GEBURTSDATUM"
 sdate = "STERBEDATUM"
 lalter = "LEBENSALTER"
+bvers = "BIBELVERS"
+tmotiv = "TRAUERMOTIV"
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
-lplaceh = [lname,sname,sort,gdate,sdate,lalter]
+lplaceh = [lname,sname,sort,gdate,sdate,lalter,bvers,tmotiv]
 
 
-def getTheVars():       #export variables from Excel?
+def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
     print("This are all the Infos we got:")
     global path
     wb = load_workbook(path+"\\Infoinput.xlsx")          # am besten baue ich hier direkt ein, dass er auf die excel tabelle im gleichen Ordner schaut ....
@@ -50,9 +55,13 @@ def getTheVars():       #export variables from Excel?
     global lalter
     lalter = str(ws["C5"].value.year - ws["C4"].value.year - ((ws["C5"].value.month, ws["C5"].value.day) < (ws["C4"].value.month, ws["C4"].value.day)))
     print("Lebensalter:     ",lalter)
-
+    global tmotiv
+    tmotiv = (ws["C17"].value)
+    print("Trauermotiv:     ",tmotiv)
+    bvers = choseRightBrick("\\Bibelverse\\",tmotiv)
+    print("Bibelvers:\n",bvers,"\n")
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,gdate,sdate,lalter]            #put new vars here ... also put them in the lplaceh list ....
+    lvars = [lname,sname,sort,gdate,sdate,lalter,bvers,tmotiv]            #put new vars here ... also put them in the lplaceh list ....
 
 def paraMove(output_doc_name, paragraph):
     output_para = output_doc_name.add_paragraph()
@@ -84,8 +93,25 @@ def fillVars():
                 paragraph.text = paragraph.text.replace(str(var),lvars[lpos])
 
 
-def choseRightBrick():              # letztlich muss ich irgendwo noch ne Funktion einbauen, die Selektieren kann
-    print("Chosing right Brick ....")
+def choseRightBrick(brickpath,parameter):              # letztlich muss ich irgendwo noch ne Funktion einbauen, die Selektieren kann
+#    print("Chosing right Brick in ",brickpath," with the parameter: ",parameter)
+    bricklist =[]
+    brickpath = Path("."+"\\Bricks\\"+brickpath)
+    for item in brickpath.iterdir():            # abfrage ob er ne excel tabelle durchgehen soll, oder eben verschiedene docx dateien
+        if item.suffix == ".xlsx":
+            lpos = 4                            #startwer ab dem es in der Excell tabelle einträge gibt
+            excel = load_workbook(item)         #Workbook
+            sheet = excel.active                #Aktive Tabellenliste/Seite
+            for cell in sheet["B5":"B7"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
+                lpos +=1                        #trakt die position in der Liste ... in diesem Fall die Zeile
+                if str(cell[0].value) == parameter:
+                    bricklist.append(sheet["C"+str(lpos)].value)
+    brick = random.choice(bricklist)
+    return brick
+
+#    if item in blabla == itemtype (Excel ... dann ...)
+
+#    elif item in blala == itemtype (docx ...)
 
 
 
