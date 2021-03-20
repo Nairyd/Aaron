@@ -19,6 +19,7 @@ from pathlib import Path
 path = "."
 document = Document()
 
+
 # Vars to check ...
 lname = "NACHNAME"
 sname = "VORNAME"
@@ -29,8 +30,10 @@ lalter = "LEBENSALTER"
 bvers = "BIBELVERS"
 tmotiv = "TRAUERMOTIV"
 lzahl = "LIEDERANZAHL"
+bform = "BESTATTUNGSFORM"
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
-lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl]
+
+lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform]
 
 
 def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
@@ -65,12 +68,13 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global lzahl
     lzahl = (ws["C27"].value)
     print("Liederanzahl:    ",lzahl)
-
-
+    global bform
+    bform = (ws["C21"].value)
+    print("Bestattungsform:    ",bform)
 
 
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl]            #put new vars here ... also put them in the lplaceh list ....
+    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform]            #put new vars here ... also put them in the lplaceh list ....
 
     # Die Liednamen ... glaube die müssen nicht in die listen lvars und lplaceh ....
     global lname1, lname2, lname3, lname4
@@ -93,7 +97,7 @@ def paraMove(output_doc_name, paragraph):           # to keep the style
 
 
 def brickMove(doc):
-    print("Brick Moved")
+    #print("Brick Moved")
     global document
     input_doc = Document(path+doc)
     for para in input_doc.paragraphs:
@@ -101,7 +105,7 @@ def brickMove(doc):
 
 
 def fillVars():
-    print("Filling the Vars")
+    print("\nFilling the Vars")
     lpos=-1
     for var in lplaceh:
         lpos += 1                   #check list position
@@ -125,6 +129,7 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
         if item.suffix == ".docx":
             if parameter == 0:
                 bricklist.append("\\"+str(item))
+                print(bricklist)
             else:
                 brickdoc = Document(item)
                 header = brickdoc.sections[0].header
@@ -137,6 +142,7 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
 
 
     brick = random.choice(bricklist)
+    print(brick)
     return brick
 
 
@@ -145,10 +151,8 @@ def buildEverything():
     buildIntro()
     buildAnsprache()
     buildOutro()
-    #buildAmGrab()
-    fillVars()
-    document.save(lname+'.docx')
-    print("Build Everything")
+    buildAmGrab()
+
 
 
 def buildIntro():
@@ -164,7 +168,7 @@ def buildIntro():
 
     #Votum
     document.add_heading("Votum", 1)
-    brickMove("\\Bricks\\Votum\\Votum.docx")            # ich muss die datei weglassen denk ich und die Datei mit den Random sachen auswählen????
+    brickMove(choseRightBrick("Votum",0))           # ich muss die datei weglassen denk ich und die Datei mit den Random sachen auswählen????
 
     #Begrüßung
     document.add_heading("Begrüßung", 1)
@@ -193,26 +197,82 @@ def buildIntro():
         document.add_heading("Lied: "+lname1, 1)
     print("Intro finished")
 
+
 def buildAnsprache():
     print("\nBuilding the Ansprache now ...")
     global path
 
+    #Traueransprache
+    document.add_heading("Traueransprache", 1)
+    #brickMove(choseRightBrick("\\Eingangsgebet\\",tmotiv))
 
+    # unterteilen in verschiedene Blöcke:
+    # Einstieg ...
+    # Persönliche Highlights in Form des Motives ... Stationen aufm Weg/Säulen, die Tragen/Puzzle, die ein Mosaik ergeben
+    print("Ansprache finished")
 
 def buildOutro():
-    print("\nBuilding the Outro now ...")
+    print("\nBuilding the outro now ...")
     global path
 
+    #Mögliches Lied
+    if lzahl >= 3:
+        document.add_heading("Lied: "+lname3, 1)
+    else:
+        document.add_heading("Lied: "+lname2, 1)
 
+    #Fürbitten
+    document.add_heading("Fürbitten", 1)
+    brickMove(choseRightBrick("\\Fürbitten\\",0))
+
+    #Abschiedswort
+    document.add_heading("Abschiedswort", 1)
+    brickMove(choseRightBrick("\\Abschiedswort\\",0))
+
+    #Aussegnung
+    document.add_heading("Aussegnung", 1)
+    brickMove(choseRightBrick("\\Aussegnung\\",0))
+
+    #Mögliches Lied
+    if lzahl == 4:
+        document.add_heading("Lied: "+lname4, 1)
+
+    #Geleitwort
+    document.add_heading("Geleitwort", 1)
+    brickMove(choseRightBrick("\\Geleitwort\\",0))
+
+    print("Outro finished")
+
+def buildAmGrab():
+    print("\nBuilding AmGrab ...")
+    global path
+
+    #Bestattungswort
+    document.add_heading("Bestattungswort", 1)
+    brickMove(choseRightBrick("\\Bestattungswort\\",0))
+
+    #Auferstehungswort
+    document.add_heading("Auferstehungswort", 1)
+    brickMove(choseRightBrick("\\Auferstehungswort\\",tmotiv))
+
+    #Vaterunser
+    document.add_heading("Vaterunser", 1)
+    brickMove(choseRightBrick("\\Vaterunser\\",0))
+
+    #Segen
+    document.add_heading("Segen", 1)
+    brickMove(choseRightBrick("\\Segen\\",0))
+
+    print("Am Grab finished")
 
 
 
 try:
-
-    getTheVars()
-
-    buildEverything()
-
+    getTheVars()                        # get vars from the Infoinput
+    buildEverything()                   # build the doc
+    fillVars()                          # filling the doc with the right vars (placeholder into vars)
+    document.save(lname+'.docx')        # just save the final doc
+    print("\n\nEyerything is build together")
 
 
 finally:
@@ -224,17 +284,22 @@ finally:
 # ------ ToDo:  --------------------------------------------------------------------------------------------
 #   x  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
 #   x  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
-#   o  Formatierung überarbeiten ...
 #   o  Alle Texte mit den Motiven verknüpfen, für den maximalen roten Faden ... (es muss aber die möglichkeit geben auch allgemeine Texte zu mischen ... nicht jede Begrüßung braucht gleich nen Thema)
 #      Wie wäre die Idee, letztlich alles was auswirkung auf den roten Faden hat mit nem entsprechenden Header zu verpacken und ggf landet dann die begrüßung mehrfach in der bricklist, da es sowohl zum motiv weg passt, als auch zum motiv der Familie ...dann wäre die wahrscheinlichkeit erhögt ... kp ob das schlau ist.
 #   o  Bei Gebeten / Psalm könnte man auch noch sowas eingeben wie Klage oder Vertrauen ...
+#   x  Kompletten Ablauf erstellen
+#   o  Ablauf anpassen an Bestattungsform/Ort
+#   o  Funktion einbauen, die am Anfang checkt, wie groß die Auswahl der einzelnen Bricks ist ...damit man weiß, wo man ggf. erweitern kann
+#
 #
 #
 #   o  am Ende checken, ob mehr als  2000 Wörter sind ... wenn ja, dann Schriftlesung rauskicken? Oder umgekehrt, schriftlesung nur einfügen, wenn usw....
-#   o  Lieder npassen ....
+#   x  Lieder anpassen und ggf Ablauf anpassen
 #   o  später noch Varianten für plötzlichen Tod / lange Krankheit / Suizid / Tod eines Kindes ... einbauen
 #   o  in männliche und weibliche Anrede unterscheiden
-#   o  Weitere Texte erstellen ... (nicht so wichtig)
+#   x  Weitere Texte erstellen ...
+#   o  Formatierung der Bricks überarbeiten, die meisten sehen hässlich aus ....
+#   o  Frage, wie man mit Abschnitten umgeht ...
 #
 #
 #
