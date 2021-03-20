@@ -58,8 +58,10 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global tmotiv
     tmotiv = (ws["C17"].value)
     print("Trauermotiv:     ",tmotiv)
-    bvers = choseRightBrick("\\Bibelverse\\",tmotiv)
+    global bvers
+    bvers = choseRightBrick("\\Bibelvers\\",tmotiv)
     print("Bibelvers:\n",bvers,"\n")
+
     global lvars        # creating a list of all the vars
     lvars = [lname,sname,sort,gdate,sdate,lalter,bvers,tmotiv]            #put new vars here ... also put them in the lplaceh list ....
 
@@ -93,8 +95,7 @@ def fillVars():
                 paragraph.text = paragraph.text.replace(str(var),lvars[lpos])
 
 
-def choseRightBrick(brickpath,parameter):              # letztlich muss ich irgendwo noch ne Funktion einbauen, die Selektieren kann
-#    print("Chosing right Brick in ",brickpath," with the parameter: ",parameter)
+def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, dann einfach random ....
     bricklist =[]
     brickpath = Path("."+"\\Bricks\\"+brickpath)
     for item in brickpath.iterdir():            # abfrage ob er ne excel tabelle durchgehen soll, oder eben verschiedene docx dateien
@@ -106,12 +107,11 @@ def choseRightBrick(brickpath,parameter):              # letztlich muss ich irge
                 lpos +=1                        #trakt die position in der Liste ... in diesem Fall die Zeile
                 if str(cell[0].value) == parameter:
                     bricklist.append(sheet["C"+str(lpos)].value)
+        if item.suffix == ".docx":
+            if parameter == 0:
+                bricklist.append("\\"+str(item))
     brick = random.choice(bricklist)
     return brick
-
-#    if item in blabla == itemtype (Excel ... dann ...)
-
-#    elif item in blala == itemtype (docx ...)
 
 
 
@@ -142,17 +142,16 @@ def buildTheIntro():
 
     #Begrüßung
     document.add_heading("Begrüßung", 1)
-    brickMove("\\Bricks\\Begrüßung\\Begrüßung1.docx")
+    brickMove(choseRightBrick("\\Begrüßung\\",0))
 
     #Mögliches Lied
     document.add_heading("Lied:", 1)
 
-    #Eingangsgebet
-    document.add_heading("Eingangsgebet", 1)
-
     #Psalm
     document.add_heading("Psalm", 1)
-
+    brickMove(choseRightBrick("\\Psalm\\",0))
+    #Eingangsgebet
+    document.add_heading("Eingangsgebet", 1)
 
     print("Intro finished")
 
