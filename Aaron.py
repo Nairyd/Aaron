@@ -122,7 +122,7 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
             lpos = 4                            #startwer ab dem es in der Excell tabelle einträge gibt
             excel = load_workbook(item)         #Workbook
             sheet = excel.active                #Aktive Tabellenliste/Seite
-            for cell in sheet["B5":"B9"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
+            for cell in sheet["B5":"B18"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
                 lpos +=1                        #trakt die position in der Liste ... in diesem Fall die Zeile
                 if str(cell[0].value) == parameter:
                     bricklist.append(sheet["C"+str(lpos)].value)
