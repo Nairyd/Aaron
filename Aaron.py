@@ -31,9 +31,13 @@ bvers = "BIBELVERS"
 tmotiv = "TRAUERMOTIV"
 lzahl = "LIEDERANZAHL"
 bform = "BESTATTUNGSFORM"
+penomenn = "PERSONALPRONOMENN"   #Nominativ
+penomend = "PERSONALPRONOMEND"   #Dativ
+penomena = "PERSONALPRONOMENA"   #Akkusativ
+ponomen = "POSSESIVPRONOMEN"
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
 
-lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform]
+lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen]
 
 
 def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
@@ -71,10 +75,21 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global bform
     bform = (ws["C21"].value)
     print("Bestattungsform:    ",bform)
-
+    global penomen
+    global ponomen
+    if str(ws["C3"].value) == "weiblich":
+        penomenn = "Sie"
+        penomend = "Ihr"
+        penomena = "Sie"
+        ponomen = "Ihr"
+    elif str(ws["C3"].value) == "männlich":
+        penomenn = "Er"
+        penomend = "Ihm"
+        penomena = "Ihn"
+        ponomen = "Sein"
 
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform]            #put new vars here ... also put them in the lplaceh list ....
+    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen]            #put new vars here ... also put them in the lplaceh list ....
 
     # Die Liednamen ... glaube die müssen nicht in die listen lvars und lplaceh ....
     global lname1, lname2, lname3, lname4
@@ -129,7 +144,6 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
         if item.suffix == ".docx":
             if parameter == 0:
                 bricklist.append("\\"+str(item))
-                print(bricklist)
             else:
                 brickdoc = Document(item)
                 header = brickdoc.sections[0].header
@@ -142,7 +156,6 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
 
 
     brick = random.choice(bricklist)
-    print(brick)
     return brick
 
 
@@ -290,7 +303,7 @@ finally:
 #   x  Kompletten Ablauf erstellen
 #   o  Ablauf anpassen an Bestattungsform/Ort
 #   o  Funktion einbauen, die am Anfang checkt, wie groß die Auswahl der einzelnen Bricks ist ...damit man weiß, wo man ggf. erweitern kann
-#
+#   o  Groß/Kleinschreibung bei Pronomen checken ...
 #
 #
 #   o  am Ende checken, ob mehr als  2000 Wörter sind ... wenn ja, dann Schriftlesung rauskicken? Oder umgekehrt, schriftlesung nur einfügen, wenn usw....
