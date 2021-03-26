@@ -35,9 +35,14 @@ penomenn = "PERSONALPRONOMENN"   #Nominativ
 penomend = "PERSONALPRONOMEND"   #Dativ
 penomena = "PERSONALPRONOMENA"   #Akkusativ
 ponomen = "POSSESIVPRONOMEN"
+bfartikeln = "BFARTIKELN"   #Bestattunsformartikel ...
+bfartikela = "BFARTIKELA"
+bfartikeld = "BFARTIKELD"
+bfartikelg = "BFARTIKELG"
+
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
 
-lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen]
+lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen,bfartikeln,bfartikela,bfartikeld,bfartikelg]
 
 
 def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
@@ -75,7 +80,23 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global bform
     bform = (ws["C21"].value)
     print("Bestattungsform:    ",bform)
-    global penomen
+    global bfartikeln
+    global bfartikela
+    global bfartikeld
+    global bfartikelg
+    if bform == "Urne":
+        bfartikeln = "Die"      #Artikel Nominativ
+        bfartikela = "Die"      #Akkusativ
+        bfartikeld = "Der"      #Dativ
+        bfartikelg = "Der"      #Genitiv
+    elif bform == "Sarg":
+        bfartikeln = "Der"      #Artikel Nominativ
+        bfartikela = "Den"      #Akkusativ
+        bfartikeld = "Dem"      #Dativ
+        bfartikelg = "Des"      #Genitiv
+    global penomenn
+    global penomend
+    global penomena
     global ponomen
     if str(ws["C3"].value) == "weiblich":
         penomenn = "Sie"
@@ -89,7 +110,7 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
         ponomen = "Sein"
 
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen]            #put new vars here ... also put them in the lplaceh list ....
+    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen,bfartikeln,bfartikela,bfartikeld,bfartikelg]            #put new vars here ... also put them in the lplaceh list ....
 
     # Die Liednamen ... glaube die müssen nicht in die listen lvars und lplaceh ....
     global lname1, lname2, lname3, lname4
@@ -314,7 +335,7 @@ finally:
 #   x  Weitere Texte erstellen ...
 #   o  Formatierung der Bricks überarbeiten, die meisten sehen hässlich aus ....
 #   o  Frage, wie man mit Abschnitten umgeht ...
-#
+#   o  Artikel bei Bestattungsform als Placeholder einbauen ....
 #
 #
 #   o  Mega theoretisch könnte man die ganzen Variablen in Form dieser Mewis Exporte egstalten .... "ANREDE" usw...
