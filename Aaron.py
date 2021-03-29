@@ -188,7 +188,6 @@ def buildEverything():
     buildAmGrab()
 
 
-
 def buildIntro():
     print("\nBuilding the intro now ...")
     global path
@@ -305,6 +304,7 @@ try:
     getTheVars()                        # get vars from the Infoinput
     buildEverything()                   # build the doc
     fillVars()                          # filling the doc with the right vars (placeholder into vars)
+
     document.save(lname+'.docx')        # just save the final doc
     print("\n\nEyerything is build together")
 
@@ -329,6 +329,8 @@ finally:
 #
 #   o  Bestattungsagende der UEK hat noch ein paar ziemlich coole Gebete ...
 #   o  am Ende checken, ob mehr als  2000 Wörter sind ... wenn ja, dann Schriftlesung rauskicken? Oder umgekehrt, schriftlesung nur einfügen, wenn usw....
+#           if text lengh > 2000:
+#           slesung = brickMove(choseRightBrick("\\Schriftlesung\\",tmotiv))
 #   x  Lieder anpassen und ggf Ablauf anpassen
 #   o  später noch Varianten für plötzlichen Tod / lange Krankheit / Suizid / Tod eines Kindes ... einbauen
 #   x  in männliche und weibliche Anrede unterscheiden
