@@ -18,16 +18,28 @@ from pathlib import Path
 
 path = "."
 document = Document()
-
+formdoc = Document()
 
 # Vars to check ...
 lname = "NACHNAME"
 sname = "VORNAME"
+gname = "GEBURTSNAME"
+gort = "GEBURTSORT"
+bekenntnis = "BEKENNTNIS"
+lanschrift = "LETZTEANSCHRIFT"
 sort = "STERBEORT"
 gdate = "GEBURTSDATUM"
 sdate = "STERBEDATUM"
+sort = "STERBEORT"
 lalter = "LEBENSALTER"
+nangehoerig = "NAMEANGEHÖRIGE"
+aangehoerig = "ADRESSEANGEHÖRIGE"
+bdate = "BESTATTUNGSDATUM"
+bort = "BESTATTUNGSORT"
 bvers = "BIBELVERS"
+apfarr = "AMTIERENDERPFARRER"
+tbemerkungen = "TEXTBEMERKUNGEN"
+bstatter = "BESTATTUNGSUNTERNEHMEN"
 tmotiv = "TRAUERMOTIV"
 lzahl = "LIEDERANZAHL"
 bform = "BESTATTUNGSFORM"
@@ -42,7 +54,7 @@ bfartikelg = "BFARTIKELG"
 
 # Erstelle eine placeholder Liste, von allen placeholdern, die in den Bricks vorhanden sind um später lplaceh durch lvars zu ersetzen
 
-lplaceh = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen,bfartikeln,bfartikela,bfartikeld,bfartikelg]
+lplaceh = [lname,sname,gname,gort,bekenntnis,lanschrift,sort,gdate,sdate,sort,lalter,nangehoerig,aangehoerig,bdate,bort,bvers,apfarr,tbemerkungen,bstatter,tmotiv,lzahl,bform,penomenn,penomend,penomena,ponomen,bfartikeln,bfartikela,bfartikeld,bfartikelg]
 
 
 def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
@@ -52,33 +64,66 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     #name= #!/usr/bin/python
     ws = wb.active
     global lname
-    lname = (ws["C2"].value)
+    lname = (ws["B3"].value)
     global sname
-    sname = (ws["D2"].value)
+    sname = (ws["C3"].value)
     print("Name:            ",sname," ",lname)
+    global gname
+    gname = (ws["B4"].value)
+    print("geboren:         ",gname)
+    global gort
+    gort = (ws["B8"].value)
+    print("Geburtsort:      ",gort)
+    global bekenntnis
+    bekenntnis = (ws["B9"].value)
+    print("Konfession:      ",bekenntnis)
+    global lanschrift
+    lanschrift = (ws["B10"].value)
+    print("Letzte Anschrift:",lanschrift)
     global sort
-    sort = (ws["C7"].value)
+    sort = (ws["B14"].value)
     print("Sterbeort:       ",sort)
     global gdate
-    gdate = datetime.datetime.strftime((ws["C4"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
+    gdate = datetime.datetime.strftime((ws["B6"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
     print("Geburtsdatum:    ",gdate)
     global sdate
-    sdate = datetime.datetime.strftime((ws["C5"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
+    sdate = datetime.datetime.strftime((ws["B13"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
     print("Sterbedatum:     ",sdate)
     global lalter
-    lalter = str(ws["C5"].value.year - ws["C4"].value.year - ((ws["C5"].value.month, ws["C5"].value.day) < (ws["C4"].value.month, ws["C4"].value.day)))
+    lalter = str(ws["B13"].value.year - ws["B6"].value.year - ((ws["B13"].value.month, ws["B13"].value.day) < (ws["B6"].value.month, ws["B6"].value.day)))
     print("Lebensalter:     ",lalter)
+    global nangehoerig
+    nangehoerig = (ws["B15"].value)
+    print("Angehörige:      ",nangehoerig)
+    global aangehoerig
+    aangehoerig = (ws["B16"].value)
+    print("Angehörige:      ",aangehoerig)
+    global bdate
+    bdate = datetime.datetime.strftime((ws["B19"].value), "%d/%b/%Y")        #convert date into string ... looks better -.-
+    print("Tag der Bestattung:",bdate)
+    global bort
+    bort = (ws["B20"].value)
+    print("Bestattungsort:  ",bort)
+    global apfarr
+    apfarr = (ws["B22"].value)
+    print("Amtierender Pfarrer:",apfarr)
+    global tbemerkungen
+    tbemerkungen = (ws["B23"].value)
+    print("Bemerkungen/Infos:",tbemerkungen)
+    global bstatter
+    bstatter = (ws["B24"].value)
+    print("Bestatter:       ",bstatter)
     global tmotiv
-    tmotiv = (ws["C17"].value)
+    tmotiv = (ws["B27"].value)
     print("Trauermotiv:     ",tmotiv)
     global bvers
     bvers = choseRightBrick("\\Bibelvers\\",tmotiv)
     print("Bibelvers:\n",bvers,"\n")
     global lzahl
-    lzahl = (ws["C27"].value)
+    lzahl = (ws["B31"].value)
     print("Liederanzahl:    ",lzahl)
     global bform
-    bform = (ws["C21"].value)
+    bform = (ws["B21"].value)
     print("Bestattungsform:    ",bform)
     global bfartikeln
     global bfartikela
@@ -98,26 +143,36 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     global penomend
     global penomena
     global ponomen
-    if str(ws["C3"].value) == "weiblich":
+    if str(ws["B5"].value) == "weiblich":
         penomenn = "Sie"
         penomend = "Ihr"
         penomena = "Sie"
         ponomen = "Ihr"
-    elif str(ws["C3"].value) == "männlich":
+    elif str(ws["B5"].value) == "männlich":
         penomenn = "Er"
         penomend = "Ihm"
         penomena = "Ihn"
         ponomen = "Sein"
 
+
     global lvars        # creating a list of all the vars
-    lvars = [lname,sname,sort,gdate,sdate,lalter,tmotiv,bvers,lzahl,bform,penomenn,penomend,penomena,ponomen,bfartikeln,bfartikela,bfartikeld,bfartikelg]            #put new vars here ... also put them in the lplaceh list ....
+    lvars = [lname,sname,gname,gort,bekenntnis,lanschrift,sort,gdate,sdate,sort,lalter,nangehoerig,aangehoerig,bdate,bort,bvers,apfarr,tbemerkungen,bstatter,tmotiv,lzahl,bform,penomenn,penomend,penomena,ponomen,bfartikeln,bfartikela,bfartikeld,bfartikelg]            #put new vars here ... also put them in the lplaceh list ....
 
     # Die Liednamen ... glaube die müssen nicht in die listen lvars und lplaceh ....
     global lname1, lname2, lname3, lname4
-    lname1 = (ws["C28"].value)
-    lname2 = (ws["C29"].value)
-    lname3 = (ws["C30"].value)
-    lname4 = (ws["C31"].value)
+    lname1 = (ws["B32"].value)
+    lname2 = (ws["B33"].value)
+    lname3 = (ws["B34"].value)
+    lname4 = (ws["B35"].value)
+
+    global clist
+    clist = ["B3","C3","B4","B5","B6","B8","B9","B10","B13","B14","B15","B16","B19","B20","B21","B23","B24"]          #hier kommen alle Excell felder rein, die am ende gecleart werden sollen. ...
+    tabclear(ws)
+    wb.save("Infoinput.xlsx")
+
+def tabclear(tab):               #ich sollte die Excell Tabelle clearen ...
+    for i in clist:
+        tab[i].value = ''
 
 
 def paraMove(output_doc_name, paragraph):           # to keep the style
@@ -144,10 +199,28 @@ def fillVars():
     print("\nFilling the Vars")
     lpos=-1
     for var in lplaceh:
-        lpos += 1                   #check list position
+        lpos += 1                   #check list positions
         for paragraph in document.paragraphs:
             if var in paragraph.text:
                 paragraph.text = paragraph.text.replace(str(var),lvars[lpos])
+
+def fillFormular():                             # Das Bestattungsformular wird geöffnet und mit den entsprechenden Variablen befüllt.
+    print("\nFilling the Formular")
+    formdoc = Document("."+"\\Bricks\\00_Formular\\Formular_Vorlage.docx")
+    lpos=-1
+    for var in lplaceh:
+        lpos += 1                   #check list position
+        for paragraph in formdoc.paragraphs:
+            if var in paragraph.text:
+    #            paragraph.text = paragraph.text.replace(str(var),lvars[lpos])
+                inline = paragraph.runs                     # Das braucht man wohl, damit die Formatierung erhalten bleibt, durchblicke ich nicht ganz
+                for i in range(len(inline)):
+                    if var in inline[i].text:
+                        text = inline[i].text.replace(str(var),lvars[lpos])
+                        inline[i].text = text
+    formdoc.save('Bestattungsformular '+lname+'.docx')
+    print("\n\nFormular wurde erstellt ...")
+
 
 
 def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, dann einfach random ....
@@ -173,9 +246,6 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
                 #    motiv = item.section[0]
                 #    header = document.sections[0].header
                 #    header.paragraphs[0].text = "Trauerfeier "+sname+" "+lname
-
-
-
     brick = random.choice(bricklist)
     return brick
 
@@ -198,7 +268,7 @@ def buildIntro():
 
     #Header
     document.add_heading("Trauerfeier von "+sname+" "+lname, 0)
-
+    print("test1")
     #Votum
     document.add_heading("Votum", 1)
     brickMove(choseRightBrick("Votum",0))           # ich muss die datei weglassen denk ich und die Datei mit den Random sachen auswählen????
@@ -206,14 +276,14 @@ def buildIntro():
     #Begrüßung
     document.add_heading("Begrüßung", 1)
     brickMove(choseRightBrick("\\Begrüßung\\",0))
+    print("test2")
+    #Psalm
+    document.add_heading("Psalm", 1)
+    brickMove(choseRightBrick("\\Psalm\\",tmotiv))
 
     #Mögliches Lied
     if lzahl >= 3:
         document.add_heading("Lied: "+lname1, 1)
-
-    #Psalm
-    document.add_heading("Psalm", 1)
-    brickMove(choseRightBrick("\\Psalm\\",tmotiv))
 
     #Eingangsgebet
     document.add_heading("Eingangsgebet", 1)
@@ -304,13 +374,12 @@ try:
     getTheVars()                        # get vars from the Infoinput
     buildEverything()                   # build the doc
     fillVars()                          # filling the doc with the right vars (placeholder into vars)
-
-    document.save(lname+'.docx')        # just save the final doc
-    print("\n\nEyerything is build together")
-
+    document.save('Beerdigung '+lname+'.docx')        # just save the final doc
+    print("\n\nBeerdigung wurde erstellt ...")
+    fillFormular()
 
 finally:
-    input("\nEpic ....")
+    input("\nBis zum nächsten Mal ....")
 
 
 
@@ -325,6 +394,14 @@ finally:
 #   o  Ablauf anpassen an Bestattungsform/Ort
 #   o  Funktion einbauen, die am Anfang checkt, wie groß die Auswahl der einzelnen Bricks ist ...damit man weiß, wo man ggf. erweitern kann
 #   o  Groß/Kleinschreibung bei Pronomen checken ...
+#   o  Ausgabedatei umbenennen in "Beerdigung xyz"
+#   o  Excel Tabelle clearen am Ende oder: GUI
+#   o  Erweiterung der Bestattungsbilder: Regenbogen ... "Über den Regenbogen gegangen = gestorben" ... Regenbogen = Gottes Segen ... lebt jetzt unter dem Regenbogen? Weiter in seiner Hand ... Also thematisch auf den Segen eingehen.
+#   o  "Seines" einbauen bei den Pronomen und in die Hinführung des Weg Motivs einbauen
+#   o  TODESART in Infoinput einbauen ("Er ist friedlich eingeschlafen. / Er verstarb plötzlich und unvermittelt.") Also ein Satz, der die Art und Weise des Todes beschreibt und dann eingesetzt wird an entsprechender Stelle.
+#
+#
+#
 #
 #
 #   o  Bestattungsagende der UEK hat noch ein paar ziemlich coole Gebete ...
