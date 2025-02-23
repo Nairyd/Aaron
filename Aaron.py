@@ -399,11 +399,15 @@ finally:
 #   o  Erweiterung der Bestattungsbilder: Regenbogen ... "Über den Regenbogen gegangen = gestorben" ... Regenbogen = Gottes Segen ... lebt jetzt unter dem Mosaik? Weiter in seiner Hand ... Also thematisch auf den Segen eingehen.
 #   o  "Seines" einbauen bei den Pronomen und in die Hinführung des Weg Motivs einbauen
 #   o  TODESART in Infoinput einbauen ("Er ist friedlich eingeschlafen. / Er verstarb plötzlich und unvermittelt.") Also ein Satz, der die Art und Weise des Todes beschreibt und dann eingesetzt wird an entsprechender Stelle.
-#   o  Noch stärker das Regenbogenmotiv einbauen. Auch an anderer Stelle
-#      Regenbogen als ein Zeichen/Symbol für Frieden, einen ewigen Bund.
-#      Symbol für Trost …
-#      Ein Sonnenstrahl genügt, verwandelt Tränen in einen Regenbogen, Symbol für Hoffnung.
-#      Symbol für „Gott geht mit“, „Gott meint es gut mit uns“.
+#   x  Noch stärker das Regenbogenmotiv einbauen. Auch an anderer Stelle
+#   o  Motivliste: Ich habe:
+#           2x Weg
+#           Fluss/Bootsfahrt
+#           Psalm 23
+#           1x Bild
+#           1x Regenbogen/Mosaik
+#
+#
 #
 #
 #
