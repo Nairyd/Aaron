@@ -402,15 +402,22 @@ finally:
 #   x  Noch stärker das Regenbogenmotiv einbauen. Auch an anderer Stelle
 #   o  Motivliste: Ich habe:
 #           2x Weg
-#           Fluss/Bootsfahrt
-#           Psalm 23
+#           1x Fluss/Bootsfahrt (hat den längsten Text aktuell ca. 5 Minuten allein durch Hinführung und Ausblick)
+#           1x Psalm 23 (at den längsten Text aktuell ca. 5 Minuten allein durch Hinführung und Ausblick)
 #           1x Bild
 #           1x Regenbogen/Mosaik
 #
+#   o  Motivliste in Infoinput:
+#           Weg
+#           Psalm23
+#           Säulen
+#           Bild
+#           Freude (ist vllt nicht gut)
 #
 #
 #
 #
+#   o  krasse Beerdigung einbauen als Thema (also Suizid oder Kind ... mit besonderen Gebeten, Ansprache muss man dann schauen ...)
 #
 #   o  Bestattungsagende der UEK hat noch ein paar ziemlich coole Gebete ...
 #   o  am Ende checken, ob mehr als  2000 Wörter sind ... wenn ja, dann Schriftlesung rauskicken? Oder umgekehrt, schriftlesung nur einfügen, wenn usw....
