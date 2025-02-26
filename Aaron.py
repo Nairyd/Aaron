@@ -1,10 +1,17 @@
+from docx.enum.section import WD_ORIENTATION
+
 print ("Aaron\n\nExodus 2,16 'Aaron wird für dich zum Volk sprechen. Es ist so, als ob du durch ihn sprichst. Und er wird deine Botschaften weitergeben, so wie ein Prophet meine.'\n\n")
 
 # Die Idee: Anhand der Daten aus Infoinput.xlsx wird ein Dokument zusammengestellt.
 # Als Grundlage für das Dokument stehen mehrere docx Dokumente zur Verfügung (Bricks)
 #
 #
-
+# WICHTIG  Notwendig in cmd (admin) damit es läuft
+#python -m pip install --upgrade pip
+#pip install os
+#pip install openpyxl
+#pip install docx
+#pip install python-docx
 
 import os
 import datetime
@@ -17,7 +24,7 @@ from pathlib import Path
 
 
 path = "."
-document = Document()
+document = Document()    # Ich muss hier ne Vorlage nutzen, damit ich Seitenzahlen ergänzen kann und Querformat einbauen kann usw.
 formdoc = Document()
 
 # Vars to check ...
@@ -167,7 +174,7 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
 
     global clist
     clist = ["B3","C3","B4","B5","B6","B8","B9","B10","B13","B14","B15","B16","B19","B20","B21","B23","B24"]          #hier kommen alle Excell felder rein, die am ende gecleart werden sollen. ...
-    tabclear(ws)
+  #während dem testen  tabclear(ws)
     wb.save("Infoinput.xlsx")
 
 def tabclear(tab):               #ich sollte die Excell Tabelle clearen ...
@@ -231,9 +238,9 @@ def choseRightBrick(brickpath,parameter):       # wenn der parameter == 0 ist, d
             lpos = 4                            #startwer ab dem es in der Excell tabelle einträge gibt
             excel = load_workbook(item)         #Workbook
             sheet = excel.active                #Aktive Tabellenliste/Seite
-            for cell in sheet["B5":"B18"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
+            for cell in sheet["B5":"B17"]:       #durchsuche die Spalte .. länge muss noch manuell angepasst werden
                 lpos +=1                        #trakt die position in der Liste ... in diesem Fall die Zeile
-                if str(cell[0].value) == parameter:
+                if parameter in cell[0].value:
                     bricklist.append(sheet["C"+str(lpos)].value)
         if item.suffix == ".docx":
             if parameter == 0:
@@ -261,14 +268,13 @@ def buildEverything():
 def buildIntro():
     print("\nBuilding the intro now ...")
     global path
-
     #Headline
     header = document.sections[0].header
     header.paragraphs[0].text = "Trauerfeier "+sname+" "+lname
 
     #Header
     document.add_heading("Trauerfeier von "+sname+" "+lname, 0)
-    print("test1")
+
     #Votum
     document.add_heading("Votum", 1)
     brickMove(choseRightBrick("Votum",0))           # ich muss die datei weglassen denk ich und die Datei mit den Random sachen auswählen????
@@ -276,7 +282,7 @@ def buildIntro():
     #Begrüßung
     document.add_heading("Begrüßung", 1)
     brickMove(choseRightBrick("\\Begrüßung\\",0))
-    print("test2")
+
     #Psalm
     document.add_heading("Psalm", 1)
     brickMove(choseRightBrick("\\Psalm\\",tmotiv))
@@ -307,11 +313,12 @@ def buildAnsprache():
 
     #Traueransprache
     document.add_heading("Traueransprache", 1)
-    #brickMove(choseRightBrick("\\Eingangsgebet\\",tmotiv))
-
-    # unterteilen in verschiedene Blöcke:
-    # Einstieg ...
+    brickMove(choseRightBrick("\\Ansprache\\"+str(tmotiv)+"\\Hinführung\\",0))
+    document.add_paragraph()
     # Persönliche Highlights in Form des Motives ... Stationen aufm Weg/Säulen, die Tragen/Puzzle, die ein Mosaik ergeben
+    document.add_paragraph()
+    document.add_paragraph()
+    brickMove(choseRightBrick("\\Ansprache\\"+str(tmotiv)+"\\Ausblick\\",0))
     print("Ansprache finished")
 
 def buildOutro():
@@ -387,16 +394,15 @@ finally:
 # ------ ToDo:  --------------------------------------------------------------------------------------------
 #   x  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
 #   x  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
-#   o  Alle Texte mit den Motiven verknüpfen, für den maximalen roten Faden ... (es muss aber die möglichkeit geben auch allgemeine Texte zu mischen ... nicht jede Begrüßung braucht gleich nen Thema)
+#   x  Alle Texte mit den Motiven verknüpfen, für den maximalen roten Faden ... (es muss aber die möglichkeit geben auch allgemeine Texte zu mischen ... nicht jede Begrüßung braucht gleich nen Thema)
 #      Wie wäre die Idee, letztlich alles was auswirkung auf den roten Faden hat mit nem entsprechenden Header zu verpacken und ggf landet dann die begrüßung mehrfach in der bricklist, da es sowohl zum motiv weg passt, als auch zum motiv der Familie ...dann wäre die wahrscheinlichkeit erhögt ... kp ob das schlau ist.
 #   o  Bei Gebeten / Psalm könnte man auch noch sowas eingeben wie Klage oder Vertrauen ...
 #   x  Kompletten Ablauf erstellen
 #   o  Ablauf anpassen an Bestattungsform/Ort
 #   o  Funktion einbauen, die am Anfang checkt, wie groß die Auswahl der einzelnen Bricks ist ...damit man weiß, wo man ggf. erweitern kann
 #   o  Groß/Kleinschreibung bei Pronomen checken ...
-#   o  Ausgabedatei umbenennen in "Beerdigung xyz"
-#   o  Excel Tabelle clearen am Ende oder: GUI
-#   o  Erweiterung der Bestattungsbilder: Regenbogen ... "Über den Regenbogen gegangen = gestorben" ... Regenbogen = Gottes Segen ... lebt jetzt unter dem Mosaik? Weiter in seiner Hand ... Also thematisch auf den Segen eingehen.
+#   x  Ausgabedatei umbenennen in "Beerdigung xyz"
+#   x  Excel Tabelle clearen am Ende oder: GUI
 #   o  "Seines" einbauen bei den Pronomen und in die Hinführung des Weg Motivs einbauen
 #   o  TODESART in Infoinput einbauen ("Er ist friedlich eingeschlafen. / Er verstarb plötzlich und unvermittelt.") Also ein Satz, der die Art und Weise des Todes beschreibt und dann eingesetzt wird an entsprechender Stelle.
 #   x  Noch stärker das Regenbogenmotiv einbauen. Auch an anderer Stelle
@@ -406,16 +412,8 @@ finally:
 #           1x Psalm 23 (at den längsten Text aktuell ca. 5 Minuten allein durch Hinführung und Ausblick)
 #           1x Bild
 #           1x Regenbogen/Mosaik
-#
-#   o  Motivliste in Infoinput:
-#           Weg
-#           Psalm23
-#           Säulen
-#           Bild
-#           Freude (ist vllt nicht gut)
-#
-#
-#
+#           0x Hand
+#           0x Säulen
 #
 #   o  krasse Beerdigung einbauen als Thema (also Suizid oder Kind ... mit besonderen Gebeten, Ansprache muss man dann schauen ...)
 #
@@ -424,12 +422,9 @@ finally:
 #           if text lengh > 2000:
 #           slesung = brickMove(choseRightBrick("\\Schriftlesung\\",tmotiv))
 #   x  Lieder anpassen und ggf Ablauf anpassen
-#   o  später noch Varianten für plötzlichen Tod / lange Krankheit / Suizid / Tod eines Kindes ... einbauen
 #   x  in männliche und weibliche Anrede unterscheiden
 #   x  Weitere Texte erstellen ...
 #   o  Formatierung der Bricks überarbeiten, die meisten sehen hässlich aus ....
 #   o  Frage, wie man mit Abschnitten umgeht ...
 #   x  Artikel bei Bestattungsform als Placeholder einbauen ....
-#
-#
-#   o  Mega theoretisch könnte man die ganzen Variablen in Form dieser Mewis Exporte egstalten .... "ANREDE" usw...
+#   o  Formatierung überarbeiten, sodass man 2 spalten Querformat hat, um direkt auszudrucken und Seitenanzahl
