@@ -1,4 +1,4 @@
-from docx.enum.section import WD_ORIENTATION
+from docx.enum.section import WD_ORIENTATION, WD_SECTION_START
 
 print ("Aaron\n\nExodus 2,16 'Aaron wird für dich zum Volk sprechen. Es ist so, als ob du durch ihn sprichst. Und er wird deine Botschaften weitergeben, so wie ein Prophet meine.'\n\n")
 
@@ -24,7 +24,7 @@ from pathlib import Path
 
 
 path = "."
-document = Document()    # Ich muss hier ne Vorlage nutzen, damit ich Seitenzahlen ergänzen kann und Querformat einbauen kann usw.
+document = Document("."+"\\Bricks\\00_Formular\\Bestattung_Vorlage.docx")    # Ich nutze hier ne Vorlage nutzen, damit ich Seitenzahlen ergänzen kann und Querformat einbauen kann usw.
 formdoc = Document()
 
 # Vars to check ...
@@ -65,7 +65,7 @@ lplaceh = [lname,sname,gname,gort,bekenntnis,lanschrift,sort,gdate,sdate,sort,la
 
 
 def getTheVars():       #export variables from Excel?           könnte ich wohl auch als funktion machen, so nach dem motto ... if string value in spalte ?? == var dann geh eine spalte weiter und hol dir den Wert ....
-    print("This are all the Infos we got:")
+    print("Alle Infos aus Infoinput:")
     global path
     wb = load_workbook(path+"\\Infoinput.xlsx")          # am besten baue ich hier direkt ein, dass er auf die excel tabelle im gleichen Ordner schaut ....
     #name= #!/usr/bin/python
@@ -77,7 +77,7 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
     print("Name:            ",sname," ",lname)
     global gname
     gname = (ws["B4"].value)
-    print("geboren:         ",gname)
+    print("Geburtsname:         ",gname)
     global gort
     gort = (ws["B8"].value)
     print("Geburtsort:      ",gort)
@@ -174,7 +174,7 @@ def getTheVars():       #export variables from Excel?           könnte ich wohl
 
     global clist
     clist = ["B3","C3","B4","B5","B6","B8","B9","B10","B13","B14","B15","B16","B19","B20","B21","B23","B24"]          #hier kommen alle Excell felder rein, die am ende gecleart werden sollen. ...
-  #während dem testen  tabclear(ws)
+    tabclear(ws)  #rausnehmen zum Testen
     wb.save("Infoinput.xlsx")
 
 def tabclear(tab):               #ich sollte die Excell Tabelle clearen ...
@@ -270,7 +270,7 @@ def buildIntro():
     global path
     #Headline
     header = document.sections[0].header
-    header.paragraphs[0].text = "Trauerfeier "+sname+" "+lname
+    header.paragraphs[0].text = "Trauerfeier "+sname+" "+lname + "        "+bdate
 
     #Header
     document.add_heading("Trauerfeier von "+sname+" "+lname, 0)
@@ -381,12 +381,12 @@ try:
     getTheVars()                        # get vars from the Infoinput
     buildEverything()                   # build the doc
     fillVars()                          # filling the doc with the right vars (placeholder into vars)
-    document.save('Beerdigung '+lname+'.docx')        # just save the final doc
+    document.save('Bestattung '+sname+' '+lname+'.docx')        # just save the final doc
     print("\n\nBeerdigung wurde erstellt ...")
     fillFormular()
 
 finally:
-    input("\nBis zum nächsten Mal ....")
+    print("\nBis zum nächsten Mal ....")
 
 
 
@@ -395,15 +395,11 @@ finally:
 #   x  Platzhalter ersetzen im Abschlusstext ... hoffe das klappt
 #   x  Möglichkeit zur Random auswahl von Bricks, bzw. zur geordneten Auswahl
 #   x  Alle Texte mit den Motiven verknüpfen, für den maximalen roten Faden ... (es muss aber die möglichkeit geben auch allgemeine Texte zu mischen ... nicht jede Begrüßung braucht gleich nen Thema)
-#      Wie wäre die Idee, letztlich alles was auswirkung auf den roten Faden hat mit nem entsprechenden Header zu verpacken und ggf landet dann die begrüßung mehrfach in der bricklist, da es sowohl zum motiv weg passt, als auch zum motiv der Familie ...dann wäre die wahrscheinlichkeit erhögt ... kp ob das schlau ist.
-#   o  Bei Gebeten / Psalm könnte man auch noch sowas eingeben wie Klage oder Vertrauen ...
 #   x  Kompletten Ablauf erstellen
 #   o  Ablauf anpassen an Bestattungsform/Ort
-#   o  Funktion einbauen, die am Anfang checkt, wie groß die Auswahl der einzelnen Bricks ist ...damit man weiß, wo man ggf. erweitern kann
 #   o  Groß/Kleinschreibung bei Pronomen checken ...
 #   x  Ausgabedatei umbenennen in "Beerdigung xyz"
 #   x  Excel Tabelle clearen am Ende oder: GUI
-#   o  "Seines" einbauen bei den Pronomen und in die Hinführung des Weg Motivs einbauen
 #   o  TODESART in Infoinput einbauen ("Er ist friedlich eingeschlafen. / Er verstarb plötzlich und unvermittelt.") Also ein Satz, der die Art und Weise des Todes beschreibt und dann eingesetzt wird an entsprechender Stelle.
 #   x  Noch stärker das Regenbogenmotiv einbauen. Auch an anderer Stelle
 #   o  Motivliste: Ich habe:
@@ -412,19 +408,19 @@ finally:
 #           1x Psalm 23 (at den längsten Text aktuell ca. 5 Minuten allein durch Hinführung und Ausblick)
 #           1x Bild
 #           1x Regenbogen/Mosaik
-#           0x Hand
-#           0x Säulen
+#           1x Hand
+#           0x Säulen   (muss ich noch dringend schreiben: Verschiedene Säulen = das Leben ... was hat das Leben ausgemacht ... was hat die Person getragen, was war stabil ...)
 #
 #   o  krasse Beerdigung einbauen als Thema (also Suizid oder Kind ... mit besonderen Gebeten, Ansprache muss man dann schauen ...)
 #
-#   o  Bestattungsagende der UEK hat noch ein paar ziemlich coole Gebete ...
-#   o  am Ende checken, ob mehr als  2000 Wörter sind ... wenn ja, dann Schriftlesung rauskicken? Oder umgekehrt, schriftlesung nur einfügen, wenn usw....
-#           if text lengh > 2000:
-#           slesung = brickMove(choseRightBrick("\\Schriftlesung\\",tmotiv))
+#
 #   x  Lieder anpassen und ggf Ablauf anpassen
 #   x  in männliche und weibliche Anrede unterscheiden
 #   x  Weitere Texte erstellen ...
-#   o  Formatierung der Bricks überarbeiten, die meisten sehen hässlich aus ....
-#   o  Frage, wie man mit Abschnitten umgeht ...
+#   x  Formatierung der Bricks überarbeiten, die meisten sehen hässlich aus ....
 #   x  Artikel bei Bestattungsform als Placeholder einbauen ....
-#   o  Formatierung überarbeiten, sodass man 2 spalten Querformat hat, um direkt auszudrucken und Seitenanzahl
+#   x  Formatierung überarbeiten, sodass man 2 spalten Querformat hat, um direkt auszudrucken und Seitenanzahl
+#   x  Beerdigungstag in die Datei übernehmen also in den Titel (habs im Header eingefügt)
+#   o  Bestattungsagende der UEK hat noch ein paar ziemlich coole Gebete ...
+#           Die Agende ist übertrieben gut, da gibt Gebete und coole Texte, vor allem auch gute Alternativen zu dem "standart" kram.
+#           Ich muss überlegen, ob ich die einfach einstreue, die anderen ersetze, oder gezielt die neuen ansteuerbar mache ...
