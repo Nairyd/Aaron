@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1f341ddc-46db-42d7-811a-ba82a7f9695a" name="Changes" comment="Läuft alles. &#10;Todo: Säulen hinzufügen, Krasse Beerdigung, Moderne Gebete und Texte?" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Nairyd&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Nairyd/Aaron.git&quot;,
+    &quot;accountId&quot;: &quot;f731c090-6b87-4733-a661-586c219376b1&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2tPbhTLbwLevI8CpQSLGfTGK4nl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Aaron.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Samuel Dörr/PycharmProjects/Aaron/Bricks/Eingangsgebet&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Samuel Dörr\PycharmProjects\Aaron\Bricks\Eingangsgebet" />
+      <recent name="C:\Users\Samuel Dörr\PycharmProjects\Aaron\Bricks\Ansprache" />
+      <recent name="C:\Users\Samuel Dörr\PycharmProjects\Aaron\Bricks\Ansprache\Mosaik" />
+      <recent name="C:\Users\Samuel Dörr\PycharmProjects\Aaron\Bricks\Ansprache\Weg\Ausblick" />
+      <recent name="C:\Users\Samuel Dörr\PycharmProjects\Aaron\Bricks\Psalm" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="Aaron" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Aaron" type="PythonConfigurationType" factoryName="Python" activateToolWindowBeforeRun="false" nameIsGenerated="true">
+      <module name="Aaron" />
+      <selectedOptions>
+        <option name="environmentVariables" visible="false" />
+        <option name="envPaths" visible="false" />
+      </selectedOptions>
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="false" />
+      <option name="ADD_SOURCE_ROOTS" value="false" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Aaron.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-fc1d50d2d915-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.24978.54" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1f341ddc-46db-42d7-811a-ba82a7f9695a" name="Changes" comment="" />
+      <created>1740256775898</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740256775898</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Datum Update in der Vorlage&#10;Ergänzung von Psalm23&#10;neue Textelemente für die Ansprache">
+      <option name="closed" value="true" />
+      <created>1740262008346</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740262008346</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ausblick Mosaik hinzugefügt">
+      <option name="closed" value="true" />
+      <created>1740343716006</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740343716006</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Veränderungen in den Bricks: Bild und Regenbogen hinzugefügt bei den Ansprachen">
+      <option name="closed" value="true" />
+      <created>1740347583255</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740347583255</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Veränderungen in den Bricks: Fluss und Psalm 23 hinzugefügt.">
+      <option name="closed" value="true" />
+      <created>1740432802451</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740432802451</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Ansprache wird jetzt unterstützt&#10;Todo: Formatierung Dokument und Ansprache: Hand und Säule ...">
+      <option name="closed" value="true" />
+      <created>1740607146282</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740607146282</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Läuft alles. &#10;Todo: Säulen hinzufügen, Krasse Beerdigung, Moderne Gebete und Texte?">
+      <option name="closed" value="true" />
+      <created>1740695005575</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740695005575</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Datum Update in der Vorlage&#10;Ergänzung von Psalm23&#10;neue Textelemente für die Ansprache" />
+    <MESSAGE value="Ausblick Mosaik hinzugefügt" />
+    <MESSAGE value="Veränderungen in den Bricks: Bild und Regenbogen hinzugefügt bei den Ansprachen" />
+    <MESSAGE value="Veränderungen in den Bricks: Fluss und Psalm 23 hinzugefügt." />
+    <MESSAGE value="Ansprache wird jetzt unterstützt&#10;Todo: Formatierung Dokument und Ansprache: Hand und Säule ..." />
+    <MESSAGE value="Läuft alles. &#10;Todo: Säulen hinzufügen, Krasse Beerdigung, Moderne Gebete und Texte?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Läuft alles. &#10;Todo: Säulen hinzufügen, Krasse Beerdigung, Moderne Gebete und Texte?" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Aaron.py</url>
+          <line>423</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
